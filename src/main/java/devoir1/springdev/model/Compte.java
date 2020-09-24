@@ -40,6 +40,11 @@ public class Compte implements Serializable {
         return solde;
     }
 
+    /**
+     * Augmenter le solde du caissier recepteur
+     * Et augmenter le solde du caissier en cas d'alimentation
+     * @param solde
+     */
     public void setSolde(float solde) {
         this.solde += solde;
     }
@@ -58,6 +63,12 @@ public class Compte implements Serializable {
 
     public void setAlimenterComptes(List<AlimenterCompte> alimenterComptes) {
         this.alimenterComptes = alimenterComptes;
+    }
+    /**
+     *Diminuer le solde du caissier envoyeur
+     */
+    public void diminuerSolde(float montant){
+        this.solde -=montant;
     }
 
 }
