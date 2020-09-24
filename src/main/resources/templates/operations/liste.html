@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="assets/layout">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Operations</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-envoi">
+                            <span class="fas fa-plus-square"></span>Nouveau
+                        </button>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">LISTE DES OPERATIONS</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th>Code</th>
+                        <th>Date envoi</th>
+                        <th>Date retrait</th>
+                        <th>Frais env</th>
+                        <th>Montant</th>
+                        <th>Caissier env</th>
+                        <th>Caissier retr</th>
+                        <th>Client env</th>
+                        <th>Client retr</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="o:${operations}">
+                        <td th:text="${o.operation_id}"></td>
+                        <td th:text="${o.code_envoi}"></td>
+                        <td th:text="${o.date_envoi}"></td>
+                        <td th:text="${o.date_retrait}"></td>
+                        <td th:text="${o.frais_envoi}"></td>
+                        <td th:text="${o.montant_envoi}"></td>
+                        <td th:text="${o.caissier_env.prenom}"></td>
+                        <td th:text="${o.caissier_rec.prenom}"></td>
+                        <td th:text="${o.client_env.prenom}"></td>
+                        <td th:text="${o.client_rec.prenom}"></td>
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.content -->
+    </div>
+
+    <div class="modal fade bd-example-modal-lg" id="modal-envoi" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Nouvelle opération</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form th:action="@{/operations/add}" id="form1" method="post" th:object="${operation}">
+                    <div class="modal-body">
+                        <div class="col-md-6">
+                            <label for="type_operation">TYPE D'OPERATION</label>
+                            <select name="type_operation" id="type_operation" class="form-control">
+                                <option value="Envoi">Envoi</option>
+                                <option value="Retrait">Retrait</option>
+                            </select>
+                        </div>
+                        <hr>
+                        <div id="div_envoi" class="row">
+                            <div class="col-md-6">
+                                <h4 class="text-primary"><u>Informations sur l'envoyeur</u></h4>
+                                <div class="form-group">
+                                    <label for="num_piece" class="col-form-label">Numéro piece:</label>
+                                    <input type="text" name="num_piece" class="form-control" id="num_piece" placeholder="CNI de l'envoyeur">
+                                </div>
+                                <div class="form-group">
+                                    <label for="prenom" class="col-form-label">Prénom:</label>
+                                    <input  type="text" name="prenom" class="form-control" id="prenom" placeholder="Prénom de l'envoyeur">
+                                </div>
+                                <div class="form-group">
+                                    <label for="nom" class="col-form-label">Nom:</label>
+                                    <input  type="text" name="nom" class="form-control" id="nom" placeholder="Nom de l'envoyeur">
+                                </div>
+                                <div class="form-group">
+                                    <label for="montant" class="col-form-label">Montant:</label>
+                                    <input type="text" name="montant_envoi" class="form-control" id="montant" placeholder="Montant à envoyé">
+                                </div>
+                                <div class="form-group">
+                                    <label for="tel" class="col-form-label">Téléphone:</label>
+                                    <input type="text" name="tel" class="form-control" id="tel" placeholder="Téléphone de l'envoyeur">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <h4 class="text-info"><u>Informations sur le bénéficiaire</u></h4>
+                                <div class="form-group">
+                                    <label for="num_piece" class="col-form-label">Numéro téléphone:</label>
+                                    <input type="text"  class="form-control" id="num_piece" placeholder="Prénom du bénéficiaire">
+                                </div>
+                                <div class="form-group">
+                                    <label for="prenom" class="col-form-label">Prénom:</label>
+                                    <input  type="text" name="prenom_rec" class="form-control" id="prenom" placeholder="Prénom du bénéficiaire">
+                                </div>
+                                <div class="form-group">
+                                    <label for="nom_rec" class="col-form-label">Nom:</label>
+                                    <input  type="text" name="nom_rec" class="form-control" id="nom_rec" placeholder="Nom du bénéficiaire">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="div_retrait">
+                            <div class="form-group">
+                                <label for="num_piece_rec" class="col-form-label">Numéro piece:</label>
+                                <input type="text" name="num_piece_rec" class="form-control" id="num_piece_rec" placeholder="Prénom du bénéficiaire">
+                            </div>
+                            <div class="form-group">
+                                <label for="code_envoi_rec" class="col-form-label">Code d'envoi:</label>
+                                <input  type="text" name="code_envoi_rec" class="form-control" id="code_envoi_rec" placeholder="Code d'envoi">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
+                        <button id="save" type="submit" class="btn btn-primary">Enregister</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+
+
+

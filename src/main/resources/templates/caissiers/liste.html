@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="assets/layout">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Transfert d'arget</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- /.content-header -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">LISTE DES CAISSIERS</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>N°</th>
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <th>Code</th>
+                    <th>Numéro contrat</th>
+                    <th>Etat</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="c:${caissiers}">
+                        <td th:text="${c.user_id}"></td>
+                        <td th:text="${c.prenom}"></td>
+                        <td th:text="${c.nom}"></td>
+                        <td th:text="${c.code}"></td>
+                        <td th:text="${c.num_contrat}"></td>
+                        <td th:text="${c.etat} ? 'Actif' : 'Inactif'"></td>
+                        <td><a href="" class="btn btn-info"><span class="fas fa-eye"></span></a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+    </div>
+        <!-- /.content -->
+    </div>
+
+
+</div>
+
+
+</body>
+</html>
+
+
+
